@@ -1,0 +1,14 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "private": true,
+  "volta": {
+    "node": "18.19.0",
+    "yarn": "1.22.21"
+  }
+}
