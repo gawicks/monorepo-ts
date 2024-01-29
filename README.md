@@ -1,5 +1,7 @@
 ### Monorepo built with yarn workspaces + typescript project references
 
+#### This package contains a simple `helloWorld` function, the rest is just boilerplate.
+
 Step by step guide -
 
 - Create the following dir structure
@@ -44,10 +46,11 @@ Step by step guide -
 
 ```
  "dependencies": {
-    "haritha-lib": "*"
+    "lib": "*"
   }
 ```
 
+- `"lib": "*"` means grabs the latest version, typically in the context of yarn workspaces this means grab whatever's on local.
 - Now run `yarn` at the root (to force run `yarn --force`)
 - Verify the workspace dependencies have been create with `yarn workspace info`
 
@@ -56,18 +59,20 @@ Step by step guide -
   "app": {
     "location": "packages/app",
     "workspaceDependencies": [
-      "haritha-lib"
+      "lib"
     ],
     "mismatchedWorkspaceDependencies": []
   },
-  "haritha-lib": {
-    "location": "packages/haritha-lib",
+  "lib": {
+    "location": "packages/lib",
     "workspaceDependencies": [],
     "mismatchedWorkspaceDependencies": []
   }
 }```
 ````
 
+- This output is quite useful, particularly `mismatchedWorkspaceDependencies` it tells if a given dependency cannot be satisfied with the local version. These will not generate `symlinks`.
+- I've found that yarn has issue with `pre-release identifiers` on `semver` e.g. `1.1.837-alpha.0` is valid semver, however yarn refused to resolve this version till i removed the prerelease identifier.
 - `yarn` with hoist the dependencies to the root `node_modules` folder. only package specific deps and executable commands will live in package specific `node_modules` folders.
 - Now the import can be simplified to `import sayHi from 'lib/src'`
 - Set the entrypoint in `lib/package.json` to simplify this further
