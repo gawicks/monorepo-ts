@@ -1,3 +1,3 @@
-import sayHi from "haritha-lib";
+import helloWorld from "lib";
 
-sayHi();
+helloWorld();
